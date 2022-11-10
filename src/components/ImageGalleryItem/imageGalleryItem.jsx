@@ -1,23 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { ImageGalleryStyledItem, GalleryImage } from './imageGalleryItem.styled.js'
 
 
-export class ImageGalleryItem extends Component {
-  render() {
+export const ImageGalleryItem = ({webformatURL, largeImageURL, tags, openModal}) =>
+{
     return (
       <>
-        <ImageGalleryStyledItem onClick={this.props.openModal}>
+        <ImageGalleryStyledItem onClick={openModal}>
           <GalleryImage
-            src={this.props.webformatURL}
-            data-large={this.props.largeImageURL}
-            alt={this.props.tags}
+            src={webformatURL}
+            data-large={largeImageURL}
+            alt={tags}
           />
         </ImageGalleryStyledItem>
       </>
     );
   }
-}
 
 
 

@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types'
 import {
@@ -9,34 +9,27 @@ import {
 } from './searchbar.styled.js'
 import {MdOutlineImageSearch} from 'react-icons/md'
 
-export class Searchbar extends Component {
-  state = {
-    search: ''
-  }
+export function Searchbar ({onSubmit}) { 
+  const [search, setSearch] = useState ('')
 
-  handleChange = e => { 
-    this.setState({search: e.currentTarget.value.toLowerCase()})
-  }
-
-  handleSubmit = e => { 
+ const handleSubmit = e => { 
     e.preventDefault()
-    if (this.state.search.trim() === '') { 
+    if (search.trim() === '') { 
       toast.error('Type your request')
       return
     }
-    this.props.onSubmit(this.state.search)
-    this.setState ({ search: '' })
+    onSubmit(search)
+    setSearch ('')
   }
 
-  handleChangeValue = e => { 
-    this.setState({search: e.currentTarget.value.toLowerCase()})
+  const handleChangeValue = e => {
+    setSearch (e.currentTarget.value.toLowerCase())
   }
   
-  render() {
     return (
       <>
         <SearchbarHeader>
-          <SearchForm onSubmit={this.handleSubmit}>
+          <SearchForm onSubmit={handleSubmit}>
             <SearchFormButton type="submit">
               <>
                 <MdOutlineImageSearch size='30px' color='black' />
@@ -45,8 +38,8 @@ export class Searchbar extends Component {
 
             <SearchFormInput
               name="search"
-              value={this.state.search}
-              onChange={this.handleChangeValue}
+              value={search}
+              onChange={handleChangeValue}
               className="input"
               type="text"
               autoComplete="off"
@@ -58,7 +51,8 @@ export class Searchbar extends Component {
       </>
     );
   }
-}
+
+
 
 
 Searchbar.propTypes = {
